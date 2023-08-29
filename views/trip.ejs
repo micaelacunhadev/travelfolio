@@ -1,0 +1,73 @@
+<%- include('partials/header') -%>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-6">
+      <h2><%= trip.title %></h2>
+      <img class="img-fluid" src="<%= trip.image%>" />
+      <p><%= trip.description %></p>
+      <div class="row justify-content-between">
+      <!--
+        <form
+          class="col-1"
+          action="/post/likePost/<%= trip.id %>?_method=PUT"
+          method="POST"
+        >
+          <button class="btn btn-primary fa fa-heart" type="submit"></button>
+        <h3 class="col-3">Likes: <%= trip.likes %></h3>
+        </form>
+        -->
+        <%if(trip.user == user.id){ %>
+        <form
+          action="/trip/deleteTrip/<%= trip.id %>?_method=DELETE"
+          method="POST"
+          class="col-3"
+        >
+          <button class="btn btn-primary fa fa-trash" type="submit"></button>
+          <a class="btn btn-primary" href="/trip/<%= trip.id %>/addPost">Add Post</a>
+        </form>
+        <%}%>
+      </div>
+    </div> 
+    <div class="container">
+    <div class="row justify-content-center mt-5">
+      <ul class="row list-unstyled">
+        <% for(var i=0; i<posts.length; i++) {%>
+          <li class="col-12 justify-content-between mt-5">
+            <a href="/trip/<%= trip.id %>/post/<%= posts[i]._id%>">
+              <img class="img-fluid" src="<%= posts[i].image%>">
+            </a>
+            <p><span><%= posts[i].createdOn.toDateString() %></span> <span>| <%= posts[i].caption%></span></p>
+
+            <div class="row justify-content-between">
+             <form
+               class="col-1"
+               action="/trip/<%= trip.id %>/post/<%= posts[i]._id%>/likePost?_method=PUT"
+               method="POST"
+             >
+               <button class="btn btn-primary fa fa-heart" type="submit"></button>
+             </form>
+             <h3 class="col-3">Likes: <%= posts[i].likes %></h3>
+             <%if(posts[i].user == user.id){ %>
+             <form
+               action="/trip/<%= trip.id %>/post/<%= posts[i]._id %>/deletePost?_method=DELETE"
+               method="POST"
+               class="col-3"
+             >
+               <button class="btn btn-primary fa fa-trash" type="submit"></button>
+             </form>
+             <%}%>
+           </div>
+          </li>
+        <% } %>
+        </ul>
+    </div>
+  </div>  
+
+    <div class="col-6 mt-5">
+      <a class="btn btn-primary" href="/profile">Return to Profile</a>
+      <a class="btn btn-primary" href="/feed">Return to Feed</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') -%>
