@@ -41,7 +41,7 @@ module.exports = {
         user: req.user.id,
       });
       console.log("Post has been added!");
-      res.redirect("/feed");
+      res.redirect(`/trip/${req.params.tripId}`);
     } catch (err) {
       console.log(err);
     }
@@ -70,9 +70,9 @@ module.exports = {
       // Delete post from db
       await Post.deleteOne({ _id: req.params.id });
       console.log("Deleted Post");
-      res.redirect("/profile");
+      res.redirect(`/trip/${req.params.tripId}`);
     } catch (err) {
-      res.redirect("/profile");
+      res.redirect(`/${req.params.tripId}`);
     }
   },
 };

@@ -10,11 +10,11 @@ router.use("/:tripId/post", require("./posts"));
 //Trip Routes - simplified for now
 router.get("/:id", ensureAuth, tripsController.getTrip);
 
-router.get("/:id/addPost", tripsController.addPost);
+router.get("/:id/addPost", ensureAuth, tripsController.addPost);
 
-router.post("/createTrip", upload.single("file"), tripsController.createTrip);
+router.post("/createTrip", ensureAuth, upload.single("file"), tripsController.createTrip);
 
-router.delete("/deleteTrip/:id", tripsController.deleteTrip);
+router.delete("/deleteTrip/:id", ensureAuth, tripsController.deleteTrip);
 
 
 module.exports = router;
